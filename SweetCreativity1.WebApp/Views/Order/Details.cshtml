@@ -1,0 +1,74 @@
+﻿@using SweetCreativity1.Core.Entities;
+
+
+@model Order
+
+@{
+    ViewData["Title"] = Model.NameOrder;
+}
+
+<h1>Замовлення</h1>
+<div class="row col-4">
+    <img src="@Model.ListingPhotoPath" class="card-img-top" alt="@Model.NameOrder">
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-2">Назва замовлення:</div>
+    <div class="col-10"><strong>@Model.NameOrder</strong></div>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-2">Кількість:</div>
+    <div class="col-4">@Model.Quantity</div>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-2">Загальна сума замовлення:</div>
+    <div class="col-4">@Model.TotalPrice</div>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-2">Дата створення замовлення:</div>
+    <div class="col-4">@Model.CreatedAtOrder</div>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-2">Номер телефону замовника:</div>
+    <div class="col-4">@Model.CustomerNumber</div>
+</div>
+<hr />
+<div class="col-1">
+    <form method="post" asp-action="Delete" asp-route-id="@Model.Id">
+        <button type="submit" class="btn btn-danger">Видалити</button>
+    </form>
+</div>
+
+@*<form method="post" asp-action="UpdateStatus" asp-route-id="@Model.Id">
+    <div class="form-group">
+        <label for="Status">Статус:</label>
+        <select class="form-control" id="Status" asp-for="StatusId" asp-items="ViewBag.StatusList">
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Зберегти статус</button>
+</form>*@
+<form method="post" asp-action="UpdateStatus" asp-route-id="@Model.Id">
+    <div class="form-group">
+        <label for="Status">Статус:</label>
+        <select class="form-control" id="Status" asp-for="StatusId" asp-items="ViewBag.StatusList" style="max-height: 150px; overflow-y: auto;">
+        </select>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Зберегти статус</button>
+</form>
+
+
+</div>
+
+
+</div>
+
