@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SweetCreativity.Reposotories.Interfaces;
 using SweetCreativity.Reposotories.Repos;
 using SweetCreativity1.Core.Context;
 using SweetCreativity1.Core.Entities;
 using SweetCreativity1.Reposotories.Interfaces;
 using SweetCreativity1.Reposotories.Repos;
-//using SweetCreativity1.WebApp.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +22,7 @@ builder.Services.AddDefaultIdentity<User>(options =>
     options.Password.RequireLowercase = false;
     options.Password.RequireUppercase = false;
     options.Password.RequireNonAlphanumeric = false;
-    options.Password.RequiredLength = 4;
+    //options.Password.RequiredLength = 4;
 }).AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<SweetCreativity1Context>();
 
@@ -30,6 +30,7 @@ builder.Services.AddDefaultIdentity<User>(options =>
 builder.Services.AddScoped<IListingReposotory, ListingReposotory>();
 builder.Services.AddScoped<IUserReposotory, UserReposotory>();
 builder.Services.AddScoped<IOrderReposotory, OrderReposotory>();
+builder.Services.AddScoped<IConstructionReposotory, ConstructionReposotory>();
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 
@@ -51,7 +52,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -60,4 +61,3 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
-

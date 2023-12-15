@@ -18,7 +18,7 @@ namespace SweetCreativity1.Core.Entities
         public required string StatusName { get; set; }
 
         public virtual ICollection<Order>? Orders { get; set; }
-        
+        public virtual ICollection<Construction>? Constructions { get; set; }
         //public bool IsComplicted { get; set; }
         //[InverseProperty("Status")]
         //public virtual ICollection<Order> Orders { get; set; }

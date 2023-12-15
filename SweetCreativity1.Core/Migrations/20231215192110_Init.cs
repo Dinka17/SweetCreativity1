@@ -127,8 +127,8 @@ namespace SweetCreativity1.Core.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -172,8 +172,8 @@ namespace SweetCreativity1.Core.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -217,6 +217,42 @@ namespace SweetCreativity1.Core.Migrations
                         name: "FK_Listings_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Constructions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserSellerId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NameConstruction = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Form = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ViewDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Ingredients = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    CreatedAtOrder = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Deadline = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CoverPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Additionaly = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CustomerNumber = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    StatusId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Constructions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Constructions_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Constructions_Statuses_StatusId",
+                        column: x => x.StatusId,
+                        principalTable: "Statuses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -311,14 +347,40 @@ namespace SweetCreativity1.Core.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TextComment = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAtResponse = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ConstructionId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Comments_Constructions_ConstructionId",
+                        column: x => x.ConstructionId,
+                        principalTable: "Constructions",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1a74cda7-e049-4554-af8d-b0fcd28718cd", null, "Admin", "ADMIN" },
-                    { "4bd4ea48-4108-4be4-ba01-a4eb6e9e7b41", null, "Seller", "SELLER" },
-                    { "7353761a-c732-4758-ac13-58de6a3e7a2a", null, "Client", "CLIENT" }
+                    { "2b2ad491-7046-4ddd-9aca-ece20502a160", null, "Client", "CLIENT" },
+                    { "472fe042-5463-4920-8336-777a187b6d54", null, "Seller", "SELLER" },
+                    { "e98fb12e-cf7b-453a-af1f-62b9f50d0177", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
@@ -326,9 +388,9 @@ namespace SweetCreativity1.Core.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CoverPath", "Email", "EmailConfirmed", "FullName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UrlSocialnetwork", "UserName" },
                 values: new object[,]
                 {
-                    { "369cbc3e-e526-49c7-833c-ef1388fe9649", 0, "a39a3e6c-d214-421f-a82a-a5e316a30af4", "\\img\\user\\no_cover.jpg", "admin@sweetcreativity.com", true, "Тетяна Бондар", false, null, "ADMIN@SWEETCREATIVITY.COM", "ADMIN@SWEETCREATIVITY.COM", "AQAAAAIAAYagAAAAEJhzdemI+peSqw6hgz1JNBTNaAKnPv1hVG/Oun0TTaeUr9KeEgYFFNz9RcbtwtOg3w==", 985674335, false, "aae7fd3b-361e-4a8d-aca4-047c03e491a9", false, "@taniabondar23", "admin@sweetcreativity.com" },
-                    { "75213f53-afd5-4aaa-86e0-f03473d2e43d", 0, "4ee23498-6926-4361-84bf-7d960895eae1", "\\img\\user\\no_cover.jpg", "client@sweetcreativity.com", true, "Олена Ткачук", false, null, "CLIENT@SWEETCREATIVITY.COM", "CLIENT@SWEETCREATIVITY.COM", "AQAAAAIAAYagAAAAEGt6ekbOCQADo/u6MBGZVm+rW5gd2d7aM4tBWThkoTNn3UwF+hEDc1JzvZIAA6Njfg==", 986390482, false, "f91a6a02-bb16-47fd-8d21-ff241e2a08b0", false, "@olena_tkachuk", "client@sweetcreativity.com" },
-                    { "bfd51aff-796c-4b92-8a18-969335a086c8", 0, "2896c3d3-e3aa-4ad3-a0b9-c675fcdcba42", "\\img\\user\\no_cover.jpg", "seller@sweetcreativity.com", true, "Адріан Мельник", false, null, "SELLER@SWEETCREATIVITY.COM", "SELLER@SWEETCREATIVITY.COM", "AQAAAAIAAYagAAAAEBA79iRArIoCXNzZv+UXYaxuGnMJ31hI/sf7e65ZhTxERn45UEpG/jpslp+s09SuMA==", 984568310, false, "90fabbba-5d1c-492f-99ae-27de70727689", false, "@adriannmelnykk", "seller@sweetcreativity.com" }
+                    { "09bdcd4c-0816-4813-911c-1b94107d6548", 0, "3edc4df2-017f-410e-b3d8-77c7701325a5", "\\img\\user\\no_cover.jpg", "admin@sweetcreativity.com", true, "Тетяна Бондар", false, null, "ADMIN@SWEETCREATIVITY.COM", "ADMIN@SWEETCREATIVITY.COM", "AQAAAAIAAYagAAAAEIaA9PIDsjP9t2/q+GyuwdC9a5odEczQiPVjNs6WScr3YqpSGRT+EkRBD16ayPLNyg==", 985674335, false, "aac24e6d-b5b6-4a2f-8d06-2f59c8ac50a3", false, "@taniabondar23", "admin@sweetcreativity.com" },
+                    { "ac596778-c080-436f-a8a6-9efe0b75d980", 0, "28409c67-f210-49d1-a542-b0658dfd31be", "\\img\\user\\no_cover.jpg", "client@sweetcreativity.com", true, "Олена Ткачук", false, null, "CLIENT@SWEETCREATIVITY.COM", "CLIENT@SWEETCREATIVITY.COM", "AQAAAAIAAYagAAAAELq1vCnJeCLBZEfwVoM0t3EbpP4UK2QG8b1TxZmnHrOn3xWLeEChHid8uF1fi5nYGQ==", 986390482, false, "faa34661-00fc-4abc-ac6d-5e990a55df6f", false, "@olena_tkachuk", "client@sweetcreativity.com" },
+                    { "c23da132-cfc0-4150-b50a-6d31752de429", 0, "fbb50313-aa23-410d-aa52-23cdef0a9d26", "\\img\\user\\no_cover.jpg", "seller@sweetcreativity.com", true, "Адріан Мельник", false, null, "SELLER@SWEETCREATIVITY.COM", "SELLER@SWEETCREATIVITY.COM", "AQAAAAIAAYagAAAAEGVom12j9tQ9BXglkzuQKKH5D13Xu4xdtuRVRJ/vOPzj15gfXvO6f14Ya6xQTF+OHA==", 984568310, false, "de70b472-0782-4d08-b139-cf7f98ceea15", false, "@adriannmelnykk", "seller@sweetcreativity.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -358,10 +420,10 @@ namespace SweetCreativity1.Core.Migrations
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { "1a74cda7-e049-4554-af8d-b0fcd28718cd", "369cbc3e-e526-49c7-833c-ef1388fe9649" },
-                    { "4bd4ea48-4108-4be4-ba01-a4eb6e9e7b41", "369cbc3e-e526-49c7-833c-ef1388fe9649" },
-                    { "7353761a-c732-4758-ac13-58de6a3e7a2a", "75213f53-afd5-4aaa-86e0-f03473d2e43d" },
-                    { "4bd4ea48-4108-4be4-ba01-a4eb6e9e7b41", "bfd51aff-796c-4b92-8a18-969335a086c8" }
+                    { "472fe042-5463-4920-8336-777a187b6d54", "09bdcd4c-0816-4813-911c-1b94107d6548" },
+                    { "e98fb12e-cf7b-453a-af1f-62b9f50d0177", "09bdcd4c-0816-4813-911c-1b94107d6548" },
+                    { "2b2ad491-7046-4ddd-9aca-ece20502a160", "ac596778-c080-436f-a8a6-9efe0b75d980" },
+                    { "472fe042-5463-4920-8336-777a187b6d54", "c23da132-cfc0-4150-b50a-6d31752de429" }
                 });
 
             migrationBuilder.InsertData(
@@ -369,8 +431,8 @@ namespace SweetCreativity1.Core.Migrations
                 columns: new[] { "Id", "CategoryId", "CoverPath", "CreatedAtListing", "Description", "Location", "Price", "Product", "Title", "UserId", "Weight" },
                 values: new object[,]
                 {
-                    { 1, 1, "\\img\\listing\\no_cover.jpg", new DateTime(2023, 12, 12, 21, 24, 6, 493, DateTimeKind.Local).AddTicks(409), " Це відомий і популярний торт, який складається з тонких шарів бісквіту і вершкового крему.", "Lviv", 165, "Борошно, вершкове масло, яйця, оцет, цукор, ванільний цукор або ванільний екстракт, кукурудзяний крохмаль, вершки, сіль, прикраси (за бажанням).", "Торт Наполеон", "bfd51aff-796c-4b92-8a18-969335a086c8", 1000 },
-                    { 2, 2, "\\img\\listing\\no_cover.jpg", new DateTime(2023, 12, 12, 21, 24, 6, 493, DateTimeKind.Local).AddTicks(497), "Гармонійне поєднання повітряного шоколадного тіста мафіну з ніжно-солодкою вершковою начинкою.", "Rivne", 180, "Борошно пшеничне, цукор-пісок, суміш “Мафін шоколадний”, олія рослинна, меланж, вода. Начинка: згущене молоко “Іриска”з вершками.", "Мафіни", "369cbc3e-e526-49c7-833c-ef1388fe9649", 80 }
+                    { 1, 1, "\\img\\listing\\no_cover.jpg", new DateTime(2023, 12, 15, 21, 21, 10, 147, DateTimeKind.Local).AddTicks(9849), " Це відомий і популярний торт, який складається з тонких шарів бісквіту і вершкового крему.", "Lviv", 165, "Борошно, вершкове масло, яйця, оцет, цукор, ванільний цукор або ванільний екстракт, кукурудзяний крохмаль, вершки, сіль, прикраси (за бажанням).", "Торт Наполеон", "c23da132-cfc0-4150-b50a-6d31752de429", 1000 },
+                    { 2, 2, "\\img\\listing\\no_cover.jpg", new DateTime(2023, 12, 15, 21, 21, 10, 147, DateTimeKind.Local).AddTicks(9916), "Гармонійне поєднання повітряного шоколадного тіста мафіну з ніжно-солодкою вершковою начинкою.", "Rivne", 180, "Борошно пшеничне, цукор-пісок, суміш “Мафін шоколадний”, олія рослинна, меланж, вода. Начинка: згущене молоко “Іриска”з вершками.", "Мафіни", "09bdcd4c-0816-4813-911c-1b94107d6548", 80 }
                 });
 
             migrationBuilder.InsertData(
@@ -378,8 +440,8 @@ namespace SweetCreativity1.Core.Migrations
                 columns: new[] { "Id", "CreatedAtOrder", "CustomerNumber", "ListingId", "ListingPhotoPath", "NameOrder", "PriceOne", "Quantity", "StatusId", "TotalPrice", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 12, 12, 21, 24, 6, 493, DateTimeKind.Local).AddTicks(1111), 985684335, 1, null, "Торт Наполеон", 0m, 1, null, 250m, "75213f53-afd5-4aaa-86e0-f03473d2e43d" },
-                    { 2, new DateTime(2023, 12, 12, 21, 24, 6, 493, DateTimeKind.Local).AddTicks(1121), 985688735, 2, null, "Торт Спартак", 0m, 1, null, 400m, "369cbc3e-e526-49c7-833c-ef1388fe9649" }
+                    { 1, new DateTime(2023, 12, 15, 21, 21, 10, 147, DateTimeKind.Local).AddTicks(9985), 985684335, 1, null, "Торт Наполеон", 0m, 1, null, 250m, "ac596778-c080-436f-a8a6-9efe0b75d980" },
+                    { 2, new DateTime(2023, 12, 15, 21, 21, 10, 147, DateTimeKind.Local).AddTicks(9993), 985688735, 2, null, "Торт Спартак", 0m, 1, null, 400m, "09bdcd4c-0816-4813-911c-1b94107d6548" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -426,6 +488,26 @@ namespace SweetCreativity1.Core.Migrations
                 table: "Categories",
                 column: "NameCategory",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_ConstructionId",
+                table: "Comments",
+                column: "ConstructionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_UserId",
+                table: "Comments",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Constructions_StatusId",
+                table: "Constructions",
+                column: "StatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Constructions_UserId",
+                table: "Constructions",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Listings_CategoryId",
@@ -492,6 +574,9 @@ namespace SweetCreativity1.Core.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Comments");
+
+            migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
@@ -504,10 +589,13 @@ namespace SweetCreativity1.Core.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Statuses");
+                name: "Constructions");
 
             migrationBuilder.DropTable(
                 name: "Listings");
+
+            migrationBuilder.DropTable(
+                name: "Statuses");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

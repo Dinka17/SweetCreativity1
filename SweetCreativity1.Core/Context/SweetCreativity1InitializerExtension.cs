@@ -16,7 +16,7 @@ namespace SweetCreativity1.Core.Context
             (string admId, string clId, string selId) = seedUsersAndRoles(builder);
             seedListing(builder, new string[] { selId, admId });
             seedCategory(builder);
-           // seedUser(builder);
+            // seedUser(builder);
             seedOrder(builder, new string[] { clId, admId });
             seedStatus(builder);
         }
@@ -70,7 +70,7 @@ namespace SweetCreativity1.Core.Context
                 );
         }
 
-        
+
         private static void seedCategory(ModelBuilder builder)
         {
             builder.Entity<Category>().HasData(
@@ -186,8 +186,8 @@ namespace SweetCreativity1.Core.Context
 
             PasswordHasher<User> hasher = new PasswordHasher<User>();
             admin.PasswordHash = hasher.HashPassword(admin, "admin$pass");
-            client.PasswordHash = hasher.HashPassword(client, "admin$pass");
-            seller.PasswordHash = hasher.HashPassword(seller, "admin$pass");
+            client.PasswordHash = hasher.HashPassword(client, "client$pass");
+            seller.PasswordHash = hasher.HashPassword(seller, "seller$pass");///////
 
             builder.Entity<User>().HasData(admin, client, seller);
 
@@ -221,4 +221,5 @@ namespace SweetCreativity1.Core.Context
         }
     }
 }
+
 
