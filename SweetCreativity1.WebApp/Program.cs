@@ -26,7 +26,7 @@ builder.Services.AddDefaultIdentity<User>(options =>
 }).AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<SweetCreativity1Context>();
 
-//builder.Services.AddSingleton<UserManager<User>>();
+
 builder.Services.AddScoped<IListingReposotory, ListingReposotory>();
 builder.Services.AddScoped<IUserReposotory, UserReposotory>();
 builder.Services.AddScoped<IOrderReposotory, OrderReposotory>();

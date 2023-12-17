@@ -8,8 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using SweetCreativity1.Core.Context;
-using SweetCreativity1.Core.Entities;
+
 
 namespace SweetCreativity.Reposotories.Repos
 {

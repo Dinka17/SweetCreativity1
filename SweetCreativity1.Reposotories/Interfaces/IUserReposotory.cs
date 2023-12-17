@@ -1,15 +1,16 @@
 ﻿using SweetCreativity1.Core.Entities;
+using SweetCreativity1.Repositories.DTOs.User;
 
 namespace SweetCreativity1.Reposotories.Interfaces
 {
-    public interface IUserReposotory : ISave
+    public interface IUserReposotory 
     {
-        User Get(int id);
-        IEnumerable<User> GetAll();
-        void Add(User obj);
-        void Update(User obj);
-        void Delete(User obj);
+        Task<User> Get(string id);
+        Task<IEnumerable<UserReadDto>> GetAll();
+        Task<string> Create(UserCreateDto obj);
+        Task Update(UserUpdateDto obj, string[] roles);
+        Task<IEnumerable<string>> GetRoles();
+        void Delete(string id);
 
-        //int Find(int id);
     }
 }
