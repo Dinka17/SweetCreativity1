@@ -18,17 +18,12 @@
 else
 
 {
-        <li class="sidebar-item active">
-            <a href="@Url.Action("Register", "Account")" class='nav-link btn btn-primary'>
-                <i class="bi bi-person"></i>
-                <span>Register</span>
-            </a>
+        <li class="nav-item">
+            <a class="nav-link btn btn-primary" asp-area="Identity" asp-page="/Account/Register">Register</a>
         </li>
-        <li class="sidebar-item active">
-            <a href="@Url.Action("Login", "Account")" class='nav-link btn btn-success'>
-                <i class="bi bi-door-open"></i>
-                <span>Login</span>
-            </a>
+        <li class="nav-item">
+            <a class="nav-link btn btn-success" asp-area="Identity" asp-page="/Account/Login">Login</a>
         </li>
+
 }
 </ul>
