@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SweetCreativity.Reposotories.Interfaces;
 using SweetCreativity.Reposotories.Repos;
-using SweetCreativity1.Core.Context;
 using SweetCreativity1.Core.Entities;
+using SweetCreativity1.Domain.Context;
+using SweetCreativity1.Domain.Entities;
+using SweetCreativity1.Reposotories.Interfaces;
 
-namespace SweetCreativity.WebApp.Controllers
+namespace SweetCreativity1.WebApp.Controllers
 {
     public class ConstructionController : Controller
     {
@@ -17,8 +18,8 @@ namespace SweetCreativity.WebApp.Controllers
         public ConstructionController(IConstructionReposotory constructionReposotory, IWebHostEnvironment webHostEnviroment, [FromServices] SweetCreativity1Context context)
         {
             this.constructionReposotory = constructionReposotory;
-            this.webHostEnvironment = webHostEnviroment;
-            this._context = context;
+            webHostEnvironment = webHostEnviroment;
+            _context = context;
         }
         public IActionResult Index()
         {

@@ -1,5 +1,4 @@
-﻿
-using SweetCreativity1.Core.Entities;
+﻿using SweetCreativity1.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

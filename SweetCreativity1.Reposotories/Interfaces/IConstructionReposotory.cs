@@ -1,12 +1,11 @@
-﻿using SweetCreativity1.Core.Entities;
-using SweetCreativity1.Reposotories.Interfaces;
+﻿using SweetCreativity1.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SweetCreativity.Reposotories.Interfaces
+namespace SweetCreativity1.Reposotories.Interfaces
 {
     public interface IConstructionReposotory : ISave
     {

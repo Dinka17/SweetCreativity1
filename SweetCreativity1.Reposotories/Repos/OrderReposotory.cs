@@ -1,14 +1,14 @@
-﻿using SweetCreativity1.Core.Context;
-using SweetCreativity1.Core.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SweetCreativity1.Reposotories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SweetCreativity1.Domain.Context;
+using SweetCreativity1.Domain.Entities;
 
-namespace SweetCreativity.Reposotories.Repos
+namespace SweetCreativity1.Reposotories.Repos
 {
     public class OrderReposotory : IOrderReposotory
     {
@@ -32,7 +32,7 @@ namespace SweetCreativity.Reposotories.Repos
         public Order Get(int id)
         {
             return _context.Orders.Find(id);
-           
+
         }
 
         public IEnumerable<Order> GetAll()
@@ -59,5 +59,5 @@ namespace SweetCreativity.Reposotories.Repos
                 _context.SaveChanges();
             }
         }
-}
     }
+}
