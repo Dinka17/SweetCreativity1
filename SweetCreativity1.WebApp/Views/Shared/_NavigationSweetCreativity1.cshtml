@@ -1,41 +1,77 @@
-﻿<ul class="navbar-nav flex-grow-1">
-    @*<li class="nav-item">
-    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Головна</a>
-    </li>
-    <li class="nav-item">
-    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-    </li>*@
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Listing" asp-action="Index">Оголошення</a>
-    </li>
+﻿
 
-    @if (User.IsInRole("Seller"))
-    {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="SellerListing" asp-action="Index">Мої оголошення</a>
-        </li>
-    }
 
-    @if (User.IsInRole("Client"))
-    {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="ClientListing" asp-action="Index">Оголошення</a>
-        </li>
-    }
-    @if (User.IsInRole("Admin"))
-    {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Користувачі</a>
-        </li>
-    }
+<div class="sidebar-menu">
+    <ul class="menu">
+        <li class="sidebar-title">Menu</li>
 
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Користувачі</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index">Замовлення</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Construction" asp-action="Index">Індивідуальні замовлення</a>
-    </li>
-</ul>
+        <li class="sidebar-item active">
+            <a href="/" class='sidebar-link'>
+                <i class="fas fa-home"></i>
+                <span>Головна сторінка</span>
+            </a>
+        </li>
+
+        <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+                <i class="bi bi-stack"></i>
+                <span>Оголошення</span>
+            </a>
+            <ul class="submenu ">
+                <li class="submenu-item ">
+                    <a href="/course">Усі оголошення</a>
+                </li>
+                @if (User.IsInRole("Seller"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="SellerListing" asp-action="Index">Мої оголошення</a>
+                    </li>
+                }
+
+                @if (User.IsInRole("Client"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="ClientListing" asp-action="Index">Оголошення</a>
+                    </li>
+                }
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Користувачі</a>
+                    </li>
+                }
+
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index">Замовлення</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Construction" asp-action="Index">Індивідуальні замовлення</a>
+                </li>
+            </ul>
+
+        <li class="sidebar-title">Raise Support</li>
+
+        <li class="sidebar-item  ">
+            <a href="https://zuramai.github.io/mazer/docs" class='sidebar-link'>
+                <i class="bi bi-life-preserver"></i>
+                <span>Documentation</span>
+            </a>
+        </li>
+
+        <li class="sidebar-item  ">
+            <a href="https://github.com/zuramai/mazer/blob/main/CONTRIBUTING.md" class='sidebar-link'>
+                <i class="bi bi-puzzle"></i>
+                <span>Contribute</span>
+            </a>
+        </li>
+
+        <li class="sidebar-item  ">
+            <a href="https://github.com/zuramai/mazer#donate" class='sidebar-link'>
+                <i class="bi bi-cash"></i>
+                <span>Donate</span>
+            </a>
+        </li>
+
+    </ul>
+</div>
